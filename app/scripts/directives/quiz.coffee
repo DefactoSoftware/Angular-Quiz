@@ -16,7 +16,7 @@ angular.module('quizApp')
     transclude: true
     controller: ($scope, $attrs) ->
       @name = $scope.$eval($attrs.name)
-      $scope.quiz.response[@name] ||= {}
+      $scope.quiz.response[@name] ||= {a:false,b:false,c:false,d:false}
       @
     scope: true
     template: """
@@ -53,9 +53,9 @@ angular.module('quizApp')
     template: """
     <li>
       <label class="checkbox"
-         ng-class="{correct: quiz.answers[questionName].correct[answerName],
-                    invalid: quiz.answers[questionName].incorrect[answerName]}">
-        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName]" value="{{answerName}}">
+         ng-class="{correct: quiz.correct[questionName].answers[answerName].correctValue,
+                    invalid: quiz.correct[questionName].answers[answerName].invalid}">
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]" value="true">
         <span ng-transclude>{{questionLabel}}</span>
       </label>
     </li>
