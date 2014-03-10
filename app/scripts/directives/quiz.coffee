@@ -34,14 +34,14 @@ angular.module('quizApp')
     scope: true
     template: """
       <label class="checkbox"
-         ng-class="{correct: quiz.correct[questionName].answers[answerName].correctValue,
-                    invalid: quiz.correct[questionName].answers[answerName].invalid}">
-        <input type="checkbox" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]">
+         ng-class="{correct: quiz.answers[questionName].correct[answerName],
+                    invalid: quiz.answers[questionName].incorrect[answerName]}">
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]">
         <span ng-transclude></span>
       </label>
     """
     link: (scope, element, attrs, question) ->
-      scope.questionName = question.name
+      scope.questionName = attrs.questionname
       scope.answerName = attrs.value
 
   .directive 'listElementChoice', ->
@@ -53,16 +53,17 @@ angular.module('quizApp')
     template: """
     <li>
       <label class="checkbox"
-         ng-class="{correct: quiz.correct[questionName].answers[answerName].correctValue,
-                    invalid: quiz.correct[questionName].answers[answerName].invalid}">
-        <input type="checkbox" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]">
+         ng-class="{correct: quiz.answers[questionName].correct[answerName],
+                    invalid: quiz.answers[questionName].incorrect[answerName]}">
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]">
         <span ng-transclude>{{answerName}}</span>
       </label>
     </li>
     """
     link: (scope, element, attrs, question) ->
-      scope.questionName = attrs.questionName
+      scope.questionName = attrs.questionname
       scope.answerName = attrs.value
+      debugger
 
   .directive 'inlineAnswer', ->
     restrict: 'E',
