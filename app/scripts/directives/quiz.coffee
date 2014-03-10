@@ -15,15 +15,15 @@ angular.module('quizApp')
     replace: true
     transclude: true
     controller: ($scope, $attrs) ->
-      @name = $attrs.name
-      $scope.quiz.response[@name] ||= {}
+      @name = $scope.$eval($attrs.name)
+      $scope.quiz.response[@name] ||= {a:false,b:false,c:false,d:false}
       @
     scope: true
     template: """
       <fieldset class="question" ng-transclude ng-class="{invalid: quiz.correct[name].invalid}">
       </fieldset>
       """
-    link: (scope, element, attrs) ->
+    link: (scope, element, attrs, ctrl) ->
       scope.name = attrs.name
 
   .directive 'choice', ->
@@ -34,9 +34,9 @@ angular.module('quizApp')
     scope: true
     template: """
       <label class="checkbox"
-         ng-class="{correct: quiz.correct[questionName].answers[answerName].correctValue,
-                    invalid: quiz.correct[questionName].answers[answerName].invalid}">
-        <input type="checkbox" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]">
+         ng-class="{correct: quiz.answers[questionName].correct[answerName],
+                    invalid: quiz.answers[questionName].incorrect[answerName]}">
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]">
         <span ng-transclude></span>
       </label>
     """
@@ -55,14 +55,15 @@ angular.module('quizApp')
       <label class="checkbox"
          ng-class="{correct: quiz.correct[questionName].answers[answerName].correctValue,
                     invalid: quiz.correct[questionName].answers[answerName].invalid}">
-        <input type="checkbox" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]">
-        <span ng-transclude>{{answerName}}</span>
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]" value="true">
+        <span ng-transclude>{{questionLabel}}</span>
       </label>
     </li>
     """
     link: (scope, element, attrs, question) ->
-      scope.questionName = attrs.questionName
-      scope.answerName = attrs.value
+      scope.questionName = question.name
+      scope.questionLabel = attrs.questionlabel
+      scope.answerName = attrs.answername
 
   .directive 'inlineAnswer', ->
     restrict: 'E',
