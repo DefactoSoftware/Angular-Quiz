@@ -16,6 +16,7 @@ angular.module('quizApp')
     transclude: true
     controller: ($scope, $attrs) ->
       @name = $scope.$eval($attrs.name)
+      @type = $scope.quiz.questions[@name].type
       $scope.quiz.response[@name] ||= {a:false,b:false,c:false,d:false}
       @
     scope: true
@@ -54,15 +55,22 @@ angular.module('quizApp')
     <li>
       <label class="checkbox"
          ng-class="{correct: quiz.correct[questionName].answers[answerName].correctValue,
-                    invalid: quiz.correct[questionName].answers[answerName].invalid}">
-        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]" value="true">
-        <span ng-transclude>{{questionLabel}}</span>
+                    invalid: quiz.correct[questionName].answers[answerName].invalid}"
+         ng-switch on="questionType">
+
+        <input type="checkbox" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
+          ng-switch-when="checkbox">
+
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
+          ng-switch-when="radio" value="true">
+        <span ng-transclude>{{optionLabel}}</span>
       </label>
     </li>
     """
     link: (scope, element, attrs, question) ->
       scope.questionName = question.name
-      scope.questionLabel = attrs.questionlabel
+      scope.optionLabel= attrs.optionlabel
+      scope.questionType = question.type
       scope.answerName = attrs.answername
 
   .directive 'inlineAnswer', ->

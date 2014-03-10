@@ -14,7 +14,7 @@
           {{questionObject.question}}
 
         %ol(type="a")
-          %list_element_choice(ng-repeat="(key,value) in questionObject.options" answername="{{key}}" questionlabel ="{{value}}")
+          %list_element_choice(ng-repeat="(answerName,optionLabel) in questionObject.options" answername="{{answerName}}" optionlabel="{{optionLabel}}")
 
 %button.btn.btn-large.btn-primary(type="submit"
   ng-click="submitResponse()"
