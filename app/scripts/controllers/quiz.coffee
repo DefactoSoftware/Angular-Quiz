@@ -25,7 +25,6 @@ angular.module('quizApp')
 
     $scope.submitResponse = ->
       $scope.processing = true
-
       Flash.now.reset()
 
       succBack = ->

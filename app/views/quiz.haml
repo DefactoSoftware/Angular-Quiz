@@ -9,12 +9,12 @@
 %quiz(ng-show="quiz.ready")
   %ol(type="1")
     %li(ng-repeat="(question,questionObject) in quiz.questions")
-      %question(name="{{question}}")
+      %question(name="question")
         .description
           {{questionObject.question}}
 
         %ol(type="a")
-          %list_element_choice(ng-repeat="(key,value) in questionObject.options" value="{{value}}" questionName="{{question}}")
+          %list_element_choice(ng-repeat="(key,value) in questionObject.options" answername="{{key}}" questionlabel ="{{value}}")
 
 %button.btn.btn-large.btn-primary(type="submit"
   ng-click="submitResponse()"
