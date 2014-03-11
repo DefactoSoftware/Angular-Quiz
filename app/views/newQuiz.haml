@@ -1,0 +1,25 @@
+-# encoding: UTF-8
+%h1 Welcome to "Create a new Quiz"
+
+%button.btn.btn-default(ng-click="newQuestion()")
+  new question
+%p
+%quiz
+  %ol(type="1")
+    %li(ng-repeat="(question,questionObject) in quiz.questions")
+      %question(name="question")
+        .description
+          %input(type="text" ng-model="questionObject.question" placeholder="{{questionObject.question}}")
+          %select(ng-model="questionObject.type")
+            %option(value="radio")
+              multiple choice
+            %option(value="checkbox")
+              multiple answers
+
+        %ol(type="a")
+          %new_question_option(ng-repeat="(answerName,optionLabel) in questionObject.options" answername="{{answerName}}" optionlabel="{{optionLabel}}")
+
+%button.btn.btn-large.btn-primary(type="submit"
+  ng-click="saveQuiz()"
+  ng-show="quiz.ready"
+  ng-disabled="processing") Submit
