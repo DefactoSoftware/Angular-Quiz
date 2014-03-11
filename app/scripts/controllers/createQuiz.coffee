@@ -6,7 +6,7 @@ angular.module('quizApp')
       questions: {}
     }
 
-    $scope.newQuestion = ->
+    $scope.newQuestion = (kindOfQuestion) ->
       newQuestionCount = "" + (Object.keys(quiz.questions).length + 1)
       questionId =  'q'+ '000'.slice(0, 3 - newQuestionCount.length) + newQuestionCount
       quiz.questions[questionId] = {}
@@ -17,7 +17,7 @@ angular.module('quizApp')
           c: "option c"
           d: "option d"
         question: "new question?"
-        type: "radio"
+        type: kindOfQuestion
       quiz.answers[questionId] =
         a:false
         b:false

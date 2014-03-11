@@ -63,6 +63,7 @@ angular.module('quizApp')
 
         <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
           ng-switch-when="radio" value="true">
+        <span>{{optionLabel}}</span>
       </label>
     </li>
     """
@@ -90,9 +91,6 @@ angular.module('quizApp')
         <input type="text" class="form-control" ng-model="quiz.questions[questionName][answerName]" placeholder="{{optionLabel}}">
 
       <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="toggleEditMode()">
-          <span class="glyphicon glyphicon-edit"></span>
-        </button>
         <button type="button" class="btn btn-danger" ng-click="deleteOption(questionName,answerName)">
           <span class="glyphicon glyphicon-remove"></span>
         </button>
