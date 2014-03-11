@@ -1,7 +1,7 @@
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
-@import "bootstrap-sass/lib/bootstrap";
+@import "bootstrap-sass/vendor/assets/stylesheets/bootstrap";
 
 /* Put your CSS here */
 html, body {
@@ -43,9 +43,6 @@ $invalid: red;
       font-weight: bold;
       color: green;
     }
-  }
-  input[type="radio"]{
-    margin-left:-20px;
   }
 
   &.invalid, .invalid{
