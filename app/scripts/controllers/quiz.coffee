@@ -5,17 +5,18 @@ angular.module('quizApp')
 
     $scope.status = "Loading questions. Please wait..."
 
+    Quiz.loadQuiz(quizId).then (response) ->
+      if response?
+        $scope.quiz.description = response.description
+        $scope.quiz.options = response.options
+      $scope.status = null
+
     Quiz.loadResponse(currentUser.id).then (response) ->
       if response?
         quiz.response = response
         quiz.disabled = true
       $scope.status = null
       quiz.ready = true
-
-    Quiz.loadQuiz(quizId).then (response) ->
-      if response?
-        $scope.quiz.description = response.description
-        $scope.quiz.options = response.options
 
     Quiz.loadQuestions().then (response) ->
       if response?

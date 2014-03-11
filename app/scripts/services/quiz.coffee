@@ -29,11 +29,14 @@ angular.module('quizApp')
           currentQuiz.options = data.options
           currentQuiz.title = data.title
 
-      loadResponse: (id) ->
-        return $q.when(responses[id]) if responses[id]
+      loadResponse: (userId) ->
+        quizId = currentQuiz.id or 0
+        return $q.when(responses[quizId]?[userId]) if responses[quizId]?[userId]
 
-        DB.read("responses/#{id}").then (data) ->
-          responses[id] = data
+        DB.read("responses/#{quizId}/#{userId}").then (data) ->
+          responses[quizId] = {}
+          responses[quizId][userId]= data
 
-      submitResponse: (id, response) ->
-        DB.write("responses/#{id}", response)
+      submitResponse: (userId, response) ->
+        quizId = currentQuiz.id or 0
+        DB.write("responses/#{quizId}/#{userId}", response)
