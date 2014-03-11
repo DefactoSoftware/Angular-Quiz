@@ -35,5 +35,6 @@ angular.module('quizApp')
         DB.read("responses/#{id}").then (data) ->
           responses[id] = data
 
-      submitResponse: (id, response) ->
-        DB.write("responses/#{id}", response)
+      submitResponse: (userId, response) ->
+        quizId = currentQuiz.id or 0
+        DB.write("responses/#{quizId}/#{userId}", response)
