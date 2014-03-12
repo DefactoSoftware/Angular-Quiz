@@ -36,10 +36,9 @@ angular.module('quizApp')
         DB.read("responses/#{quizId}/#{userId}").then (data) ->
           responses[quizId] = {}
           responses[quizId][userId]= data
-        DB.read("responses/#{id}").then (data) ->
-          responses[id] = data
-      
+     
       loadResponses: (quizId) ->
+        quizId = currentQuiz.id or 0
         DB.read("responses/#{quizId}").then (data) ->
           data
 
