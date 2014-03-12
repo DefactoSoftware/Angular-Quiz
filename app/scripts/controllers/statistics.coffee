@@ -1,25 +1,57 @@
 angular.module('quizApp')
   .controller 'StatisticsCtrl', ($scope, $routeParams, $q, Flash, Quiz) ->
     quiz = $scope.quiz ||= {}
-
+    quizId = $routeParams.quizId ||= 0
+    
     $scope.status = "Loading questions. Please wait..."
-
-    defer = $q.defer()
-
-    defer.promise
-      .then ->
-        responsesResult = Quiz.loadResponses().then (responsesResult)
-          #$scope.quiz.responses = responsesResult  if responsesResult?
-        $scope.quiz.responses = responsesResult if responsesResult
-      
-      .then ->
-        answersResult = Quiz.loadAnswers().then (answersResult) ->
-        
-        $scope.quiz.answers = answersResult if answersResult
-
-    defer.resolve()
     
-    $scope.status = null
-    
-#    for own qName, answers of $scope.quiz.responses
+    Quiz.loadQuiz(quizId)
+    .then (quizResult) ->
+      if quizResult?
+        $scope.quiz.description = quizResult.description
+        $scope.quiz.options = quizResult.options
+        $scope.quiz.title = quizResult.title
+      $scope.status = null
+
+    .then ->
+      Quiz.loadResponses().then (responsesResult) ->
+        if responsesResult?
+          quiz.responses = responsesResult
+        quiz.numberOfResponders = Object.keys(quiz.responses).length
+
+    .then ->
+      Quiz.loadQuestions().then (questionsResult) ->
+        if questionsResult?
+          quiz.questions = questionsResult
+
+    .then ->
+      Quiz.loadAnswers(quizId).then (answersResult) ->
+        if answersResult?
+          quiz.answers = answersResult
+        quiz.ready = true
+
+      .then ->
+        quiz.correct = {}
+        for responder, response of quiz.responses
+          for own qName, answers of response
+            qq = quiz.correct[qName] =
+              answers: {}
+            isGoodAnswer = true
+            for own aName, correctValue of quiz.answers[qName]
+              aValue = answers[aName]
+              correct = correctValue == aValue
+              if not correct
+                qq.invalid = true
+                isGoodAnswer = false
+
+            if isGoodAnswer
+              if quiz.questions[qName].correctNumber?
+                quiz.questions[qName].correctNumber = quiz.questions[qName].correctNumber + 1
+              else
+                quiz.questions[qName].correctNumber = 1
+            else
+              if quiz.questions[qName].wrongNumber?
+                quiz.questions[qName].wrongNumber = quiz.questions[qName].wrongNumber + 1
+              else
+                quiz.questions[qName].wrongNumber = 1
 
