@@ -1,0 +1,35 @@
+-# encoding: UTF-8
+%div.input-group.col-lg-8
+  %input.title.form-control(type="text" ng-model="quiz.title" placeholder="This is a nice quiz title!")
+  %div.btn-group.input-group-btn
+    %button.btn.btn-success.dropdown-toggle(data-toggle="dropdown")
+      %span.glyphicon.glyphicon-plus
+        new question
+        %span.caret
+    %ul.dropdown-menu(role="menu")
+      %li
+        %a(href ng-click="newQuestion('radio')")
+          multiple choice (one correct)
+      %li
+        %a(href ng-click="newQuestion('checkbox')")
+          multiple answers (one or more correct)
+%p
+%quiz.col-lg-8
+  %div(ng-repeat="(question,questionObject) in quiz.questions")
+    %question(name="question")
+      %div.input-group
+        %span.input-group-addon
+          {{$index+1 + "."}}
+        %input.question.form-control(type="text" ng-model="questionObject.question" placeholder="Question... ?")
+        %span.input-group-btn
+          %button.btn.btn-info(ng-click="newOption(question)")
+            %span.glyphicon.glyphicon-plus
+              new option
+
+      %ol(type="a")
+        %new_question_option(ng-repeat="answerName in questionObject.keys" answername="{{answerName}}")
+
+  %button.btn.btn-large.btn-primary.col-lg-5(type="submit"
+    ng-click="saveQuiz()"
+    ng-show="quiz.ready"
+    ng-disabled="processing") Submit

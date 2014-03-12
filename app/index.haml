@@ -43,6 +43,8 @@
     /build:js(app) scripts/modules.js
     %script(src="bower_components/angular-unstable/angular.js")
     %script(src="bower_components/angular-firebase/ng-firebase.js")
+    %script(src="bower_components/jquery/dist/jquery.min.js")
+    %script(src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown.js")
     /endbuild
 
     /build:js({.tmp,app}) scripts/scripts.js
@@ -59,6 +61,7 @@
     %script(src="scripts/controllers/signup.js")
     %script(src="scripts/controllers/login.js")
     %script(src="scripts/controllers/quiz.js")
+    %script(src="scripts/controllers/createQuiz.js")
     /endbuild
 
 :javascript

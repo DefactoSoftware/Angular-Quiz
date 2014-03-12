@@ -63,7 +63,7 @@ angular.module('quizApp')
 
         <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
           ng-switch-when="radio" value="true">
-        <span ng-transclude>{{optionLabel}}</span>
+        <span>{{optionLabel}}</span>
       </label>
     </li>
     """
@@ -72,6 +72,35 @@ angular.module('quizApp')
       scope.optionLabel= attrs.optionlabel
       scope.questionType = question.type
       scope.answerName = attrs.answername
+
+  .directive 'newQuestionOption', ->
+    restrict: 'E'
+    replace: true
+    transclude:false
+    require: '^question'
+    scope: true
+    template: """
+    <li class="input-group">
+      <span class="input-group-addon" ng-switch on="questionType">
+        <input type="checkbox" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.answers[questionName][answerName]"
+          ng-switch-when="checkbox">
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.answers[questionName][answerName]"
+          ng-switch-when="radio" value="true">
+      </span>
+
+        <input type="text" class="form-control" ng-model="quiz.questions[questionName].options[answerName]" placeholder="option...">
+
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-danger" ng-click="deleteOption(questionName,answerName)">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </span>
+    </li>
+    """
+    link: ($scope, element, attrs, question) ->
+      $scope.questionName = question.name
+      $scope.questionType = question.type
+      $scope.answerName = attrs.answername
 
   .directive 'inlineAnswer', ->
     restrict: 'E',
