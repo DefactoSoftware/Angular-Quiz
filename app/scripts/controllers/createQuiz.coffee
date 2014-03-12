@@ -1,5 +1,5 @@
 angular.module('quizApp')
-  .controller 'CreateQuizCtrl', ($scope, $routeParams, currentUser, Quiz, Flash) ->
+  .controller 'CreateQuizCtrl', ($scope, $routeParams, Quiz, Flash) ->
     quiz = $scope.quiz ||= {
       description: "This is the quiz description"
       answers: {}

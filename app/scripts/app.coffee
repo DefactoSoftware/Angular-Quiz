@@ -27,8 +27,6 @@ angular.module('quizApp', ['ng-firebase', 'ng-firebase-simple-login'])
       .when '/quiz/new',
         templateUrl: 'views/newQuiz.html'
         controller: 'CreateQuizCtrl'
-        resolve:
-          currentUser: requireCurrentUser
 
       .when '/quiz/:quizId',
         templateUrl: 'views/quiz.html'
