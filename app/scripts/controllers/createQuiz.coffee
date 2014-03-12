@@ -12,25 +12,33 @@ angular.module('quizApp')
       quiz.questions[questionId] = {}
       quiz.questions[questionId] =
         options:
-          a: "option a"
-          b: "option b"
-          c: "option c"
-          d: "option d"
-        question: "new question?"
+          a: ""
+        keys: ["a"]
+        question: ""
         type: kindOfQuestion
       quiz.answers[questionId] =
         a:false
-        b:false
-        c:false
-        d:false
       quiz.ready = true
+
+    $scope.newOption = (questionId) ->
+      newOptionId = String.fromCharCode(
+        Object.keys(
+          quiz.questions[questionId].options
+        ).sort().reverse()[0].charCodeAt(0)+1
+      )
+      quiz.questions[questionId].options[newOptionId] = ""
+      quiz.answers[questionId][newOptionId] = false
+      quiz.questions[questionId].keys.push(newOptionId)
 
     $scope.saveQuiz = ->
       $scope.quiz = quiz
+      debugger
 
     $scope.deleteOption = (questionName, answerName) ->
       quiz = $scope.quiz
       delete quiz.questions[@questionName].options[@answerName]
-      delete quiz.answers[@questionName]
+      delete quiz.answers[@questionName][@answerName]
+      keys = quiz.questions[@questionName].keys
+      $scope.quiz.questions[@questionName].keys = (key for key in keys when key != @answerName)
       delete quiz.questions[@questionName] if not Object.keys(quiz.questions[@questionName].options).length
 

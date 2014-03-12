@@ -15,16 +15,21 @@
           multiple answers (one or more correct)
 %p
 %quiz.col-lg-8
-  %ol(type="1")
-    %li(ng-repeat="(question,questionObject) in quiz.questions")
-      %question(name="question")
-        .description
-          %input.form-control(type="text" ng-model="questionObject.question" placeholder="{{questionObject.question}}")
+  %div(ng-repeat="(question,questionObject) in quiz.questions")
+    %question(name="question")
+      %div.input-group
+        %span.input-group-addon
+          {{$index+1 + "."}}
+        %input.question.form-control(type="text" ng-model="questionObject.question" placeholder="Question... ?")
+        %span.input-group-btn
+          %button.btn.btn-info(ng-click="newOption(question)")
+            %span.glyphicon.glyphicon-plus
+              new option
 
-        %ol(type="a")
-          %new_question_option(ng-repeat="(answerName,optionLabel) in questionObject.options" answername="{{answerName}}" optionlabel="{{optionLabel}}")
+      %ol(type="a")
+        %new_question_option(ng-repeat="answerName in questionObject.keys" answername="{{answerName}}")
 
-    %button.btn.btn-large.btn-primary.col-lg-5(type="submit"
-      ng-click="saveQuiz()"
-      ng-show="quiz.ready"
-      ng-disabled="processing") Submit
+  %button.btn.btn-large.btn-primary.col-lg-5(type="submit"
+    ng-click="saveQuiz()"
+    ng-show="quiz.ready"
+    ng-disabled="processing") Submit

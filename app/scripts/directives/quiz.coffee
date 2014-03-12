@@ -82,13 +82,13 @@ angular.module('quizApp')
     template: """
     <li class="input-group">
       <span class="input-group-addon" ng-switch on="questionType">
-        <input type="checkbox" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
+        <input type="checkbox" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.answers[questionName][answerName]"
           ng-switch-when="checkbox">
-        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.answers[questionName][answerName]"
           ng-switch-when="radio" value="true">
       </span>
 
-        <input type="text" class="form-control" ng-model="quiz.questions[questionName][answerName]" placeholder="{{optionLabel}}">
+        <input type="text" class="form-control" ng-model="quiz.questions[questionName].options[answerName]" placeholder="option...">
 
       <span class="input-group-btn">
         <button type="button" class="btn btn-danger" ng-click="deleteOption(questionName,answerName)">
@@ -99,7 +99,6 @@ angular.module('quizApp')
     """
     link: ($scope, element, attrs, question) ->
       $scope.questionName = question.name
-      $scope.optionLabel= attrs.optionlabel
       $scope.questionType = question.type
       $scope.answerName = attrs.answername
 
