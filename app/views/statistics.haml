@@ -1,0 +1,23 @@
+-# encoding: UTF-8
+%h1 Statistieken: {{quiz.title}}
+
+.status(ng-show="status") {{status}}
+
+%quiz(ng-show="quiz.ready")
+  %ul
+    %li 
+      Aantal mensen die de test gedaan hebben:  {{quiz.numberOfResponders}}
+    %li 
+      Aantal goede gegeven antwoorden:
+    %li
+      Aantal fout gegeven antwoorden
+  
+  %ol
+    %li(ng-repeat="(question,questionObject) in quiz.questions")
+      {{question}} - {{questionObject.question}}
+      %br
+      Goed: {{questionObject.correctNumber || 0}} 
+      %br
+      Fout: {{questionObject.wrongNumber || 0}}
+      
+  
