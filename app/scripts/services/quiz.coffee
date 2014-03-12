@@ -25,7 +25,7 @@ angular.module('quizApp')
 
         DB.read("Quizes/#{id}").then (data) ->
           currentQuiz.courseId = data.courseId
-          currentQuiz.id = data.id
+          currentQuiz.id = id
           currentQuiz.options = data.options
           currentQuiz.title = data.title
 

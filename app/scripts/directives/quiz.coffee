@@ -50,6 +50,11 @@ angular.module('quizApp')
     replace: true,
     transclude: true,
     require: '^question'
+    controller: ($scope, $attrs) ->
+      $scope.updateRadioBtns = (questionName,answerName) ->
+        for key of $scope.quiz.response[@questionName]
+          if key isnt @answerName then $scope.quiz.response[@questionName][key] = false
+      @
     scope: true
     template: """
     <li>
@@ -61,30 +66,39 @@ angular.module('quizApp')
         <input type="checkbox" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
           ng-switch-when="checkbox">
 
-        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.response[questionName][answerName]"
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled"
+          ng-click="updateRadioBtns(questionName,answerName)"
+          ng-model="quiz.response[questionName][answerName]"
           ng-switch-when="radio" value="true">
         <span>{{optionLabel}}</span>
       </label>
     </li>
     """
-    link: (scope, element, attrs, question) ->
-      scope.questionName = question.name
-      scope.optionLabel= attrs.optionlabel
-      scope.questionType = question.type
-      scope.answerName = attrs.answername
+    link: ($scope, element, attrs, question) ->
+      $scope.questionName = question.name
+      $scope.optionLabel= attrs.optionlabel
+      $scope.questionType = question.type
+      $scope.answerName = attrs.answername
 
   .directive 'newQuestionOption', ->
     restrict: 'E'
     replace: true
     transclude:false
     require: '^question'
+    controller: ($scope, $attrs) ->
+      $scope.updateRadioBtns = (questionName,answerName) ->
+        for key of $scope.quiz.answers[@questionName]
+          if key isnt @answerName then $scope.quiz.answers[@questionName][key] = false
+      @
     scope: true
     template: """
     <li class="input-group">
       <span class="input-group-addon" ng-switch on="questionType">
         <input type="checkbox" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.answers[questionName][answerName]"
           ng-switch-when="checkbox">
-        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled" ng-model="quiz.answers[questionName][answerName]"
+        <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled"
+          ng-click="updateRadioBtns(questionName,answerName)"
+          ng-model="quiz.answers[questionName][answerName]"
           ng-switch-when="radio" value="true">
       </span>
 
