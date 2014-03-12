@@ -1,20 +1,25 @@
 -# encoding: UTF-8
-%h1 Welcome to the Quiz!
+%h1.page-header
+  Welcome to the Quiz!
 
-%button.btn.btn-default(ng-click="showCorrectAnswers()" ng-show="quiz.disabled")
+%button.btn.btn-info(ng-click="showCorrectAnswers()" ng-show="quiz.disabled")
   Show Answers
+
+%p
 
 .status(ng-show="status") {{status}}
 
 %quiz(ng-show="quiz.ready")
-  %ol(type="1")
-    %li(ng-repeat="(question,questionObject) in quiz.questions")
-      %question(name="question")
-        .description
-          {{questionObject.question}}
+  %div(ng-repeat="(question,questionObject) in quiz.questions")
+    %question(name="question")
+      %div.panel.panel-default
+        %div.panel-heading
+          %h3.panel-title.description
+            {{$index+1 + ". " + questionObject.question}}
 
-        %ol(type="a")
-          %list_element_choice(ng-repeat="(answerName,optionLabel) in questionObject.options" answername="{{answerName}}" optionlabel="{{optionLabel}}")
+        %div.panel-body
+          %ol(type="a")
+            %list_element_choice(ng-repeat="(answerName,optionLabel) in questionObject.options" answername="{{answerName}}" optionlabel="{{optionLabel}}")
 
 %button.btn.btn-large.btn-primary(type="submit"
   ng-click="submitResponse()"

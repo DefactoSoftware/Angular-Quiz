@@ -1,6 +1,9 @@
-%form.form-horizontal(novalidate name="form")
+%form.jumbotron.form-horizontal(novalidate name="form")
   %fieldset
-    .form-group
-      .controls.offset
-        %button.btn.btn-default(type="submit" data-test="login" ng-click="ctrl.start()"
-          ng-disabled="ctrl.processing") Start
+    %h1 Welcome to the Quiz
+    %p
+      this is a awesome quiz, press get started to start making it.
+    %p
+      %button.btn.btn-lg.btn-primary(type="submit" data-test="login" ng-click="ctrl.start()" ng-disabled="ctrl.processing") Get Started
+
+
