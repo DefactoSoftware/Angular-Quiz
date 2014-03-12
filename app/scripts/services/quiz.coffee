@@ -20,12 +20,12 @@ angular.module('quizApp')
         DB.read("Quizes/#{id}/answers").then (data) ->
           answers[id] = data
 
-      loadQuiz: (id) ->
-        return $q.when(currentQuiz) if currentQuiz.id is id
-
-        DB.read("Quizes/#{id}").then (data) ->
+      loadQuiz: (quizId) ->
+        return $q.when(currentQuiz) if currentQuiz.id is quizId
+        
+        DB.read("Quizes/#{quizId}").then (data) ->
           currentQuiz.courseId = data.courseId
-          currentQuiz.id = id
+          currentQuiz.id = quizId
           currentQuiz.options = data.options
           currentQuiz.title = data.title
 

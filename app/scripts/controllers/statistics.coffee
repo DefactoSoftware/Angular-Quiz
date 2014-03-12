@@ -14,13 +14,13 @@ angular.module('quizApp')
       $scope.status = null
 
     .then ->
-      Quiz.loadResponses().then (responsesResult) ->
+      Quiz.loadResponses(quizId).then (responsesResult) ->
         if responsesResult?
           quiz.responses = responsesResult
         quiz.numberOfResponders = Object.keys(quiz.responses).length
 
     .then ->
-      Quiz.loadQuestions().then (questionsResult) ->
+      Quiz.loadQuestions(quizId).then (questionsResult) ->
         if questionsResult?
           quiz.questions = questionsResult
 
