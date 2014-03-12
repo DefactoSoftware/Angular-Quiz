@@ -31,8 +31,24 @@ angular.module('quizApp')
       quiz.questions[questionId].keys.push(newOptionId)
 
     $scope.saveQuiz = ->
-      $scope.quiz = quiz
-      debugger
+      delete quiz.response
+      delete quiz.ready
+      quiz = angular.toJson(quiz)
+      quiz = angular.fromJson(quiz)
+      $scope.processing = true
+      Flash.now.reset()
+
+      succBack = ->
+        Flash.now.success "Thanks for submitting the quiz!"
+        quiz.disabled = true
+
+      errBack = (error) ->
+        Flash.now.error "Failed to save the quiz: #{error}"
+
+      Quiz.submitQuiz(quiz).then(succBack, errBack)
+
+      null
+
 
     $scope.deleteOption = (questionName, answerName) ->
       quiz = $scope.quiz
