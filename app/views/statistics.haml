@@ -1,23 +1,25 @@
 -# encoding: UTF-8
-%h1 Statistieken: {{quiz.title}}
+%div.well
+  %h1 Statistieken: {{quiz.title}}
 
-.status(ng-show="status") {{status}}
+  .status(ng-show="status") {{status}}
 
-%quiz(ng-show="quiz.ready")
-  %ul
-    %li 
-      Aantal mensen die de test gedaan hebben:  {{quiz.numberOfResponders}}
-    %li 
-      Aantal goede gegeven antwoorden:
-    %li
-      Aantal fout gegeven antwoorden
-  
-  %ol
-    %li(ng-repeat="(question,questionObject) in quiz.questions")
-      {{question}} - {{questionObject.question}}
-      %br
+  %quiz(ng-show="quiz.ready")
+    %ul
+      %li 
+        Aantal mensen die de test gedaan hebben:  {{quiz.numberOfResponders}}
+      %li 
+        Aantal goede gegeven antwoorden: {{quiz.totalCorrectNumber || 0}}
+      %li
+        Aantal fout gegeven antwoorden: {{quiz.totalWrongNumber || 0}}
+%ol.list-group
+  %li.list-group-item(ng-repeat="(question,questionObject) in quiz.questions")
+    {{question}} - {{questionObject.question}}
+    %br
+    %span.label.label-success
       Goed: {{questionObject.correctNumber || 0}} 
-      %br
+    %br
+    %span.label.label-danger
       Fout: {{questionObject.wrongNumber || 0}}
       
   

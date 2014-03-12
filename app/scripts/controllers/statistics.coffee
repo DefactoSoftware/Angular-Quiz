@@ -49,9 +49,17 @@ angular.module('quizApp')
                 quiz.questions[qName].correctNumber = quiz.questions[qName].correctNumber + 1
               else
                 quiz.questions[qName].correctNumber = 1
+              if quiz.totalCorrectNumber?
+                quiz.totalCorrectNumber = quiz.totalCorrectNumber + 1
+              else
+                quiz.totalCorrectNumber = 1
             else
               if quiz.questions[qName].wrongNumber?
                 quiz.questions[qName].wrongNumber = quiz.questions[qName].wrongNumber + 1
               else
                 quiz.questions[qName].wrongNumber = 1
+              if quiz.totalWrongNumber?
+                quiz.totalWrongNumber = quiz.totalWrongNumber + 1
+              else
+                quiz.totalWrongNumber = 1
 
