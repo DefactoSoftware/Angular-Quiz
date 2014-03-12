@@ -36,7 +36,7 @@ angular.module('quizApp', ['ng-firebase', 'ng-firebase-simple-login'])
         resolve:
           currentUser: requireCurrentUser
 
-      .when '/statistics',
+      .when '/statistics/:quizId',
         templateUrl: 'views/statistics.html'
         controller: 'StatisticsCtrl'
         controllerAs: 'StatisticsCtrl'
