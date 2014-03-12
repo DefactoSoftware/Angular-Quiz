@@ -10,19 +10,19 @@ angular.module('quizApp')
         $scope.quiz.description = response.description
         $scope.quiz.options = response.options
       $scope.status = null
-
-    Quiz.loadResponse(currentUser.id).then (response) ->
-      if response?
-        quiz.response = response
-        quiz.disabled = true
-      $scope.status = null
-      quiz.ready = true
-
-    Quiz.loadQuestions().then (response) ->
-      if response?
-        $scope.quiz.questions = response
-        $scope.quiz.ready = true
-      $scope.status = null
+    .then ->
+      Quiz.loadResponse(currentUser.id).then (response) ->
+        if response?
+          quiz.response = response
+          quiz.disabled = true
+        $scope.status = null
+        quiz.ready = true
+    .then ->
+      Quiz.loadQuestions().then (response) ->
+        if response?
+          $scope.quiz.questions = response
+          $scope.quiz.ready = true
+        $scope.status = null
 
     $scope.submitResponse = ->
       $scope.processing = true
