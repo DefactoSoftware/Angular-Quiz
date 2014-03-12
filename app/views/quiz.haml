@@ -1,9 +1,11 @@
 -# encoding: UTF-8
 %h1.page-header
-  Welcome to the Quiz!
+  Quiz!
+  %h2
+  Beantwoord de volgende vragen:
 
 %button.btn.btn-info(ng-click="showCorrectAnswers()" ng-show="quiz.disabled")
-  Show Answers
+  Toon antwoorden
 
 %p
 
@@ -24,4 +26,4 @@
 %button.btn.btn-large.btn-primary(type="submit"
   ng-click="submitResponse()"
   ng-show="quiz.ready && !quiz.disabled"
-  ng-disabled="processing") Submit
+  ng-disabled="processing") Inleveren
