@@ -69,7 +69,7 @@ angular.module('quizApp')
         <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled"
           ng-click="updateRadioBtns(questionName,answerName)"
           ng-model="quiz.response[questionName][answerName]"
-          ng-switch-when="radio" value="true">
+          ng-switch-when="radio" ng-value="true">
         <span>{{optionLabel}}</span>
       </label>
     </li>
@@ -99,7 +99,7 @@ angular.module('quizApp')
         <input type="radio" name="{{questionName}}" ng-disabled="quiz.disabled"
           ng-click="updateRadioBtns(questionName,answerName)"
           ng-model="quiz.answers[questionName][answerName]"
-          ng-switch-when="radio" value="true">
+          ng-switch-when="radio" ng-value="true">
       </span>
 
         <input type="text" class="form-control" ng-model="quiz.questions[questionName].options[answerName]" placeholder="option...">
