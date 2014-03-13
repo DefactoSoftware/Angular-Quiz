@@ -28,6 +28,7 @@ angular.module('quizApp')
           currentQuiz.id = quizId
           currentQuiz.options = data.options
           currentQuiz.title = data.title
+          currentQuiz
 
       loadResponse: (userId) ->
         quizId = currentQuiz.id or 0
